@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रंग भविष्यवाणी खेल</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .controls {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .color-button {
+            padding: 15px 30px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            transition: transform 0.1s;
+        }
+        .color-button:hover {
+            transform: scale(1.05);
+        }
+        #red { background-color: #e74c3c; } /* लाल */
+        #green { background-color: #2ecc71; } /* हरा */
+        #blue { background-color: #3498db; } /* नीला */
+
+        #result-display {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            font-size: 20px;
+            min-height: 100px;
+            background-color: white;
+        }
+        #message {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🔮 रंग भविष्यवाणी खेल</h1>
+
+    <div class="controls">
+        <p>अपनी भविष्यवाणी चुनें:</p>
+        <button class="color-button" id="red" onclick="makePrediction('Red')">लाल (Red)</button>
+        <button class="color-button" id="green" onclick="makePrediction('Green')">हरा (Green)</button>
+        <button class="color-button" id="blue" onclick="makePrediction('Blue')">नीला (Blue)</button>
+    </div>
+
+    <div id="result-display">
+        <p>परिणाम यहाँ दिखेगा।</p>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // उपलब्ध रंगों की सूची
+        const availableColors = ["Red", "Green", "Blue"];
+
+        // यह फंक्शन एक रैंडम रंग जनरेट करेगा
+        function generateWinningColor() {
+            // 0, 1, या 2 में से एक रैंडम इंडेक्स जनरेट करें
+            const randomIndex = Math.floor(Math.random() * availableColors.length);
+            
+            // रैंडम रंग रिटर्न करें
+            return availableColors[randomIndex];
+        }
+
+        // यह मुख्य फंक्शन है जो भविष्यवाणी को संभालता है
+        function makePrediction(userChoice) {
+            
+            // 1. विजेता रंग जनरेट करें
+            const winningColor = generateWinningColor();
+
+            // 2. परिणाम को डिस्प्ले करें
+            const resultDisplay = document.getElementById('result-display');
+            const messageElement = document.getElementById('message');
+
+            // 3. यूज़र के चुनाव और विजेता रंग की तुलना करें
+            if (userChoice === winningColor) {
+                // जीत
+                messageElement.style.color = 'green';
+                messageElement.textContent = `आप जीत गए! 🎉`;
+                resultDisplay.style.borderColor = 'green';
+            } else {
+                // हार
+                messageElement.style.color = 'red';
+                messageElement.textContent = `आप हार गए। 😟`;
+                resultDisplay.style.borderColor = 'red';
+            }
+
+            resultDisplay.innerHTML = `
+                <p>आपकी पसंद: <strong>${userChoice}</strong></p>
+                <p>विजेता रंग: <strong>${winningColor}</strong></p>
+                <p id="message" style="color: ${messageElement.style.color}; font-weight: bold;">${messageElement.textContent}</p>
+            `;
+            
+            // भविष्य में, आप यहाँ वॉलेट अपडेट करने का लॉजिक जोड़ सकते हैं
+            console.log(`User chose: ${userChoice}, Winner is: ${winningColor}`);
+        }
+    </script>
+
+</body>
+</html>
